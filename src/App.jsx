@@ -1,19 +1,19 @@
 
 import React from 'react';
 import UserList from './components/UserList';
-import UserForm from './components/UserForm/UserForm';
+
+import CreateUser from './Pages/CreateUser/CreateUser';
+import Navbar from './components/Shared/Navbar/Navbar';
 
 
 
 function App() {
-
-
-
-
   return (
     <>
-      <UserList />
-      <UserForm />
+      {/* <Navbar /> */}
+      {/* <UserList /> */}
+      {/* <UserForm /> */}
+
     </>
   )
 }

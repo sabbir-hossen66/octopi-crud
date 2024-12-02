@@ -12,7 +12,7 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
 
 
 export const fetchUser = createAsyncThunk('users/fetchUser', async (userId) => {
-  const response = await fetch(`${API_BASE_URL} / ${userId}`);
+  const response = await fetch(`${API_BASE_URL}/${userId}`);
   if (!response.ok) throw new Error('Failed to fetch user');
   return await response.json();
 });
@@ -30,7 +30,7 @@ export const createUser = createAsyncThunk('users/createUser', async (newUser) =
 
 
 export const updateUser = createAsyncThunk('users/updateUser', async ({ userId, updatedData }) => {
-  const response = await fetch(`${API_BASE_URL} / ${userId}`, {
+  const response = await fetch(`${API_BASE_URL}/${userId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedData),

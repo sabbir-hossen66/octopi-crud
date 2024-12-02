@@ -5,10 +5,39 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import { store } from './apps/store.js'
 
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Layout from './layout/Layout.jsx'
+import CreateUser from './Pages/CreateUser/CreateUser.jsx'
+import UserList from './components/UserList.jsx'
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <App />,
+      },
+      {
+        path: "/createUser",
+        element: <CreateUser />
+      },
+      {
+        path: "/userList",
+        element: <UserList />
+      }
+    ],
+  },
+]);
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </StrictMode>,
 )

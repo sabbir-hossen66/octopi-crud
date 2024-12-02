@@ -12,6 +12,7 @@ import {
 import Layout from './layout/Layout.jsx'
 import CreateUser from './Pages/CreateUser/CreateUser.jsx'
 import UserList from './components/UserList.jsx'
+import UserDetails from './Pages/UserDetails/UserDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/userList",
         element: <UserList />
+      },
+      {
+        path: "/users/:id",
+        element: <UserDetails />
       }
     ],
   },

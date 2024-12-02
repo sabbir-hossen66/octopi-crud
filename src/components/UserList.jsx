@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, fetchUsers } from '../apps/features/users/userSlice';
 import UserModal from './UserModal/UserModal';
+import { Link } from 'react-router-dom';
 
 const UserList = () => {
   const dispatch = useDispatch();
@@ -54,16 +55,22 @@ const UserList = () => {
           currentUsers.map((user) => (
             <li key={user._id} className="flex justify-between items-center p-4 bg-gray-100 rounded-lg shadow-md">
               <span className="text-gray-800 text-lg">{user.name}</span>
-              <div className="space-x-3">
+              <div className="flex space-x-3">
+                <Link
+                  to={`/users/${user._id}`}
+                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+                >
+                  View
+                </Link>
                 <button
                   onClick={() => handleEdit(user)}
-                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
+                  className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 transition duration-300"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(user._id)}
-                  className="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition duration-300"
+                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition duration-300"
                 >
                   Delete
                 </button>

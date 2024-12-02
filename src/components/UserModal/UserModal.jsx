@@ -29,7 +29,7 @@ const UserModal = ({ isOpen, onClose, user }) => {
         >
           ✕
         </button>
-        <h2 className="text-xl font-semibold mb-4">Edit User</h2>
+        <h2 className="text-xl font-semibold mb-4">Update User</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -71,7 +71,7 @@ const UserModal = ({ isOpen, onClose, user }) => {
               type="submit"
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700"
             >
-              Save
+              Updated
             </button>
           </div>
         </form>

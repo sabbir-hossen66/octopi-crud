@@ -1,11 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-import { deleteUser, fetchUsers } from "../apps/features/users/userSlice";
-import { useEffect, useState } from "react";
-import UserModal from "./UserModal/UserModal";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteUser, fetchUsers } from '../apps/features/users/userSlice';
+import UserModal from './UserModal/UserModal';
 
 const UserList = () => {
   const dispatch = useDispatch();
   const { users, status, error } = useSelector((state) => state.users);
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const usersPerPage = 5;
 
   // Fetch users when the component mounts or status changes to 'idle'
   useEffect(() => {
@@ -30,28 +34,36 @@ const UserList = () => {
     setIsModalOpen(true);
   };
 
+  // Pagination logic
+  const indexOfLastUser = currentPage * usersPerPage;
+  const indexOfFirstUser = indexOfLastUser - usersPerPage;
+  const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   // Render loading or error states
   if (status === 'loading') return <p className="text-center text-lg">Loading...</p>;
   if (status === 'failed') return <p className="text-center text-red-600">Error: {error}</p>;
 
   return (
     <div className="p-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4 text-center">User List</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-600">User List</h2>
       <ul className="space-y-4">
-        {users && users.length > 0 ? (
-          users.map((user) => (
-            <li key={user._id} className="flex justify-between items-center p-4 bg-gray-800 rounded-lg shadow-md">
-              <span className="text-white">{user.name}</span>
+        {currentUsers && currentUsers.length > 0 ? (
+          currentUsers.map((user) => (
+            <li key={user._id} className="flex justify-between items-center p-4 bg-gray-100 rounded-lg shadow-md">
+              <span className="text-gray-800 text-lg">{user.name}</span>
               <div className="space-x-3">
                 <button
                   onClick={() => handleEdit(user)}
-                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                  className="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(user._id)}
-                  className="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700"
+                  className="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 transition duration-300"
                 >
                   Delete
                 </button>
@@ -59,9 +71,26 @@ const UserList = () => {
             </li>
           ))
         ) : (
-          <p className="text-center text-gray-300">No users found.</p>
+          <p className="text-center text-gray-500">No users found.</p>
         )}
       </ul>
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-6">
+        <ul className="flex space-x-2">
+          {Array.from({ length: Math.ceil(users.length / usersPerPage) }, (_, i) => (
+            <li key={i + 1}>
+              <button
+                onClick={() => paginate(i + 1)}
+                className={`px-3 py-2 rounded-full ${currentPage === i + 1 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-600'
+                  } hover:bg-indigo-500 transition duration-300`}
+              >
+                {i + 1}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {/* User Modal */}
       {isModalOpen && (
